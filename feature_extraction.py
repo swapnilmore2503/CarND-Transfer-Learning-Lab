@@ -13,8 +13,8 @@ FLAGS = flags.FLAGS
 flags.DEFINE_string('training_file', '', "Bottleneck features training file (.p)")
 flags.DEFINE_string('validation_file', '', "Bottleneck features validation file (.p)")
 flags.DEFINE_integer('epochs', 50, "Number of epochs")
-flags.DEFINE_integer('batch_size', 128, "Batch Size")
-flags.DEFINE_float('l_rate', 0.005, "Learning Rate")
+flags.DEFINE_integer('batch_size', 256, "Batch Size")
+flags.DEFINE_float('l_rate', 0.001, "Learning Rate")
 
 def load_bottleneck_data(training_file, validation_file):
     """
