@@ -4,6 +4,7 @@ import numpy as np
 # TODO: import Keras layers you need here
 from keras.layers import Input, Dense, Flatten
 from keras.models import Model
+from keras import optimizers
 
 flags = tf.app.flags
 FLAGS = flags.FLAGS
@@ -11,8 +12,9 @@ FLAGS = flags.FLAGS
 # command line flags
 flags.DEFINE_string('training_file', '', "Bottleneck features training file (.p)")
 flags.DEFINE_string('validation_file', '', "Bottleneck features validation file (.p)")
-flags.DEFINE_integer('epochs', 50, 'Number of epochs')
-flags.DEFINE_integer('batch_size', 128, 'Batch Size')
+flags.DEFINE_integer('epochs', 50, "Number of epochs")
+flags.DEFINE_integer('batch_size', 128, "Batch Size")
+flags.DEFINE_float('l_rate', 0.005, "Learning Rate")
 
 def load_bottleneck_data(training_file, validation_file):
     """
@@ -58,7 +60,8 @@ def main(_):
     x = Flatten()(inp)
     x = Dense(nb_classes, activation = 'softmax')(x)
     model = Model(inp, x)
-    model.compile(optimizer = 'adam', loss = 'sparse_categorical_crossentropy', metrics=['accuracy'])
+    adam = optimizers.Adam(lr = FLAGS.l_rate)
+    model.compile(optimizer = adam, loss = 'sparse_categorical_crossentropy', metrics=['accuracy'])
     
     # TODO: train your model here
     
